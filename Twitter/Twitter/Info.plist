@@ -25,7 +25,7 @@
 			<string>swapniltamrakar.Twitter</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>twitterdemo</string>
+				<string>mytwitterdemo</string>
 			</array>
 		</dict>
 	</array>
