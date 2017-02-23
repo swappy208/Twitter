@@ -42,41 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url.description)
-        let requestToken = BDBOAuth1Credential(queryString: url.query)
-        let twitterClient = BDBOAuth1SessionManager(baseURL: NSURL(string: "https://api.twitter.com")! as URL!, consumerKey: "Val98L5TvdFFO8OC8yTwLVghl", consumerSecret: "DwztDdC2mmDxaO6M5nNjx3mwam8UXfv51HpOTJJkSPguqRUGNW")
-        twitterClient?.fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken!, success: { (accessToken: BDBOAuth1Credential?) in
-            print("I got the access Token")
-            twitterClient?.get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task, response) -> Void in
-                print("account: \(response)")
-                
-                let userDictionary = response as? NSDictionary
-                let user = User(dictionary: userDictionary!)
-                
-                print("name: \(user.name)")
-                print("screenname: \(user.screenname)")
-                print("profile: \(user.profileUrl)")
-                print("description: \(user.tagline)")
-            }, failure: { (task, Error) in
-            })
-            twitterClient?.get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task, response) in
-                let dictionaries = response as! [NSDictionary]
-                let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
-                for tweet in tweets{
-                    print("\(tweet.text)")
-                }
-            }, failure: { (task,Error ) in
-            })
-        }, failure: { (Error) in
-            print ("error:\(Error?.localizedDescription)")
-        })
+        TwitterClient.sharedInstance?.handleOpenUrl(url: url as NSURL)
         return true
     }
-    
-    /*func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url.description)
-        return true
-    }
-    */
 }
 

@@ -35,10 +35,46 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <segue destination="B1w-BP-SUF" kind="presentation" identifier="loginSegue" id="Fjf-db-CLW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="117.59999999999999" y="123.68815592203899"/>
+        </scene>
+        <!--Tweets View Controller-->
+        <scene sceneID="vZ6-NT-Sbs">
+            <objects>
+                <viewController id="FBc-pz-f5v" customClass="TweetsViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="CGS-wX-7Yc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="2Dp-zC-rkD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r84-Wj-rXK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1858" y="124"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Gej-rj-bJR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="B1w-BP-SUF" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hys-un-P55">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FBc-pz-f5v" kind="relationship" relationship="rootViewController" id="Zy8-Kr-YX9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="99o-Ue-5A1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1077.5999999999999" y="123.68815592203899"/>
         </scene>
     </scenes>
 </document>
