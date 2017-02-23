@@ -49,14 +49,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("I got the access Token")
             twitterClient?.get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task, response) -> Void in
                 print("account: \(response)")
-                let user = response as? NSDictionary
-                print("name: \(user?["name"])")
+                
+                let userDictionary = response as? NSDictionary
+                let user = User(dictionary: userDictionary!)
+                
+                print("name: \(user.name)")
+                print("screenname: \(user.screenname)")
+                print("profile: \(user.profileUrl)")
+                print("description: \(user.tagline)")
             }, failure: { (task, Error) in
             })
             twitterClient?.get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task, response) in
-                let tweets = response as! [NSDictionary]
+                let dictionaries = response as! [NSDictionary]
+                let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
                 for tweet in tweets{
-                    print("\(tweet["text"]!)")
+                    print("\(tweet.text)")
                 }
             }, failure: { (task,Error ) in
             })

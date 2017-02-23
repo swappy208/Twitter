@@ -13,6 +13,8 @@
 		EC4E74961E5D0B0A002B30DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC4E74941E5D0B0A002B30DF /* Main.storyboard */; };
 		EC4E74981E5D0B0A002B30DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC4E74971E5D0B0A002B30DF /* Assets.xcassets */; };
 		EC4E749B1E5D0B0A002B30DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC4E74991E5D0B0A002B30DF /* LaunchScreen.storyboard */; };
+		EC7F1D3A1E5F758E00E5A560 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F1D391E5F758E00E5A560 /* User.swift */; };
+		EC7F1D3C1E5F75BD00E5A560 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F1D3B1E5F75BD00E5A560 /* Tweet.swift */; };
 		ECE32B311E5D0BE40048532A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE32B301E5D0BE40048532A /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,8 @@
 		EC4E74971E5D0B0A002B30DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC4E749A1E5D0B0A002B30DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC4E749C1E5D0B0A002B30DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC7F1D391E5F758E00E5A560 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
+		EC7F1D3B1E5F75BD00E5A560 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tweet.swift; path = ../Tweet.swift; sourceTree = "<group>"; };
 		ECE32B301E5D0BE40048532A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,15 +84,41 @@
 		EC4E748F1E5D0B0A002B30DF /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				EC7F1D381E5F756800E5A560 /* API */,
+				EC7F1D371E5F754800E5A560 /* View Controllers */,
+				EC7F1D361E5F753C00E5A560 /* Models */,
 				EC4E74901E5D0B0A002B30DF /* AppDelegate.swift */,
-				EC4E74921E5D0B0A002B30DF /* ViewController.swift */,
 				EC4E74941E5D0B0A002B30DF /* Main.storyboard */,
 				EC4E74971E5D0B0A002B30DF /* Assets.xcassets */,
 				EC4E74991E5D0B0A002B30DF /* LaunchScreen.storyboard */,
 				EC4E749C1E5D0B0A002B30DF /* Info.plist */,
-				ECE32B301E5D0BE40048532A /* LoginViewController.swift */,
 			);
 			path = Twitter;
+			sourceTree = "<group>";
+		};
+		EC7F1D361E5F753C00E5A560 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EC7F1D391E5F758E00E5A560 /* User.swift */,
+				EC7F1D3B1E5F75BD00E5A560 /* Tweet.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		EC7F1D371E5F754800E5A560 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EC4E74921E5D0B0A002B30DF /* ViewController.swift */,
+				ECE32B301E5D0BE40048532A /* LoginViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		EC7F1D381E5F756800E5A560 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +244,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC7F1D3A1E5F758E00E5A560 /* User.swift in Sources */,
+				EC7F1D3C1E5F75BD00E5A560 /* Tweet.swift in Sources */,
 				ECE32B311E5D0BE40048532A /* LoginViewController.swift in Sources */,
 				EC4E74931E5D0B0A002B30DF /* ViewController.swift in Sources */,
 				EC4E74911E5D0B0A002B30DF /* AppDelegate.swift in Sources */,
