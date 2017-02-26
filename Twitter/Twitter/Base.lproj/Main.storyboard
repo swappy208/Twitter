@@ -52,7 +52,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
-                    <navigationItem key="navigationItem" id="2Dp-zC-rkD"/>
+                    <navigationItem key="navigationItem" id="2Dp-zC-rkD">
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="eyx-un-568">
+                            <connections>
+                                <action selector="onLogOutButton:" destination="FBc-pz-f5v" id="gj6-Gs-j5n"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r84-Wj-rXK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -61,7 +67,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Gej-rj-bJR">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="B1w-BP-SUF" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TweetsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="B1w-BP-SUF" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hys-un-P55">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

@@ -9,6 +9,8 @@
 import UIKit
 import BDBOAuth1Manager
 class TwitterClient: BDBOAuth1SessionManager {
+    
+    
     static let sharedInstance = TwitterClient(baseURL: NSURL(string: "https://api.twitter.com")! as URL!, consumerKey: "Val98L5TvdFFO8OC8yTwLVghl", consumerSecret: "DwztDdC2mmDxaO6M5nNjx3mwam8UXfv51HpOTJJkSPguqRUGNW")
     func homeTimeLine(success: @escaping ([Tweet]) -> (), failure: (NSError) -> ())
     {
@@ -19,20 +21,22 @@ class TwitterClient: BDBOAuth1SessionManager {
         }, failure: { (task,Error ) in
         })
     }
-    func currentAccount()
+    func currentAccount(success: @escaping (User) -> (), failure: @escaping (NSError) -> ())
     {
-        
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task, response) -> Void in
             print("account: \(response)")
             
             let userDictionary = response as? NSDictionary
             let user = User(dictionary: userDictionary!)
             
+            success(user)
+            
             print("name: \(user.name)")
             print("screenname: \(user.screenname)")
             print("profile: \(user.profileUrl)")
             print("description: \(user.tagline)")
-        }, failure: { (task, Error) in
+        }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error as NSError)
         })
     }
     var loginSuccess: (() -> ())?
@@ -56,17 +60,20 @@ class TwitterClient: BDBOAuth1SessionManager {
     func handleOpenUrl(url: NSURL){
         let requestToken = BDBOAuth1Credential(queryString: url.query)
         fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken!, success: { (accessToken: BDBOAuth1Credential?) in
-            self.loginSuccess?()
-            /*self.homeTimeLine(success: { (tweets) in
-                for tweet in tweets{
-                    print(tweet.text)
-                }
-            }, failure: <#T##NSError#>)
-            self.currentAccount()
-            */
+            self.currentAccount(success: { (user) in
+                User.currentUser = user
+                self.loginSuccess?()
+            }, failure: { (error) in
+               self.loginfailure?(error as! NSError)
+            })
         }, failure: { (Error) in
             print ("error:\(Error?.localizedDescription)")
             self.loginfailure?(Error as! NSError)
         })
+    }
+    func logout(){
+        User.currentUser = nil
+        deauthorize()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
     }
 }
