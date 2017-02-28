@@ -16,15 +16,18 @@ PODS:
     - AFNetworking/NSURLSession
   - BDBOAuth1Manager (2.0.0):
     - AFNetworking/NSURLSession (~> 3.0.0)
+  - CBZSplashView (1.0.0)
 
 DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
+  - CBZSplashView
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   BDBOAuth1Manager: 92d17d06f8a648602962304cd2f35ae7394fa001
+  CBZSplashView: 9ce4cba22024476ff4a97d6433e7347da6376016
 
-PODFILE CHECKSUM: 4a1894f4e86f7f1c00b2b2b03f76ce41402fbb15
+PODFILE CHECKSUM: 6b63b22748f2a5c7e9b8414a4c1da9c77ac62bdb
 
 COCOAPODS: 1.2.0

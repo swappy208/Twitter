@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>CBZSplashView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Twitter.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,7 +27,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>37EBE0F3B507E288F4CF8396F97863E2</key>
+		<key>4FDBAC09063BEC4F7DAA1C914CFF0CFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC5CA3AD9F04EE333D8018473B7307B0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

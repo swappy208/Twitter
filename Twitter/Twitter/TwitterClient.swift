@@ -12,9 +12,10 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     
     static let sharedInstance = TwitterClient(baseURL: NSURL(string: "https://api.twitter.com")! as URL!, consumerKey: "Val98L5TvdFFO8OC8yTwLVghl", consumerSecret: "DwztDdC2mmDxaO6M5nNjx3mwam8UXfv51HpOTJJkSPguqRUGNW")
-    func homeTimeLine(success: @escaping ([Tweet]) -> (), failure: (NSError) -> ())
+
+    func homeTimeLine(count: Int, success: @escaping ([Tweet]) -> (), failure: (NSError) -> ())
     {
-        get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task, response) in
+        get("1.1/statuses/home_timeline.json", parameters: ["count": count], progress: nil, success: { (task, response) in
             let dictionaries = response as! [NSDictionary]
             let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
             success(tweets)
@@ -75,5 +76,82 @@ class TwitterClient: BDBOAuth1SessionManager {
         User.currentUser = nil
         deauthorize()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
+    }
+    static func timeelapsed(timestamp: Date) -> String {
+        let interval = timestamp.timeIntervalSinceNow
+        
+        if interval < 60 * 60 * 24 {
+            let seconds = -Int(interval.truncatingRemainder(dividingBy: 60))
+            let minutes = -Int((interval / 60).truncatingRemainder(dividingBy: 60))
+            let hours = -Int((interval / 3600))
+            
+            let result = (hours == 0 ? "" : "\(hours)h ") + (minutes == 0 ? "" : "\(minutes)m ") + (seconds == 0 ? "" : "\(seconds)s")
+            return result
+        } else {
+            let formatter: DateFormatter = {
+                let f = DateFormatter()
+                f.dateFormat = "EEE/MMM/d"
+                return f
+            }()
+            return formatter.string(from: timestamp as Date)
+        }
+    }
+    func retweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
+        post("1.1/statuses/retweet/" + tweet.id_str! + ".json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
+            let dictionary = response as? NSDictionary
+            let tweet = Tweet(dictionary: dictionary!)
+            success(tweet)
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+    }
+    func favorite(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
+        post("1.1/favorites/create.json", parameters: ["id": tweet.id_str!], progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
+            let dictionary = response as? NSDictionary
+            let tweet = Tweet(dictionary: dictionary!)
+            success(tweet)
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+            
+        })
+    }
+    
+    func unretweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
+        if !tweet.retweeted! {
+        } else {
+            var original_tweet_id: String?
+            
+            if tweet.retweeted_status == nil {
+                original_tweet_id = tweet.id_str
+            } else {
+                original_tweet_id = tweet.retweeted_status?.id_str
+            }
+            get("1.1/statuses/show.json", parameters: ["id": original_tweet_id!, "include_my_retweet": true], progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
+                let dictionary = response as? NSDictionary
+                let full_tweet = Tweet(dictionary: dictionary!)
+                let retweet_id = full_tweet.current_user_retweet?.id_str
+                // step 3
+                self.post("1.1/statuses/unretweet/" + retweet_id! + ".json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
+                    let dictionary = response as? NSDictionary
+                    let tweet = Tweet(dictionary: dictionary!)
+                    success(tweet)
+                }, failure: { (task: URLSessionDataTask?, error: Error) in
+                    failure(error)
+                })
+            }, failure: { (task: URLSessionDataTask?, error: Error) in
+                print(error.localizedDescription)
+            })
+        }
+    }
+    
+    func unfavorite(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
+        post("1.1/favorites/destroy.json", parameters: ["id": tweet.id_str!], progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
+            let dictionary = response as? NSDictionary
+            let tweet = Tweet(dictionary: dictionary!)
+            success(tweet)
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+            
+        })
     }
 }

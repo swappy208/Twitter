@@ -11,6 +11,7 @@ import UIKit
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tweets: [Tweet]!
+    var count = 30
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +21,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.rowHeight = UITableViewAutomaticDimension
         
         navigationItem.titleView?.backgroundColor = .blue
-        TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets) in
+        TwitterClient.sharedInstance?.homeTimeLine(count: count, success: { (tweets: [Tweet]) -> () in
             self.tweets = tweets
             for tweet in tweets{
                 print(tweet.text)
@@ -55,6 +56,66 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         TwitterClient.sharedInstance?.logout()
     }
 
+    @IBAction func favorite(_ sender: Any) {
+        let buttonPosition:CGPoint = (sender as AnyObject).convert(CGPoint.zero, to: self.tableView)
+        let indexPath = tableView.indexPathForRow(at: buttonPosition)
+        let tweet = tweets?[(indexPath?.row)!]
+        if (tweet?.favorited!)! {
+            TwitterClient.sharedInstance?.unfavorite(tweet: tweet!, success: { (tweet: Tweet) -> () in
+                TwitterClient.sharedInstance?.homeTimeLine(count: self.count, success: { (tweets: [Tweet]) -> () in
+                    self.tweets = tweets
+                    self.tableView.reloadData()
+                }, failure: { (error: Error) -> () in
+                    print(error.localizedDescription)
+                })
+                print("unfavorited")
+            }, failure: { (error: Error) -> () in
+                print(error.localizedDescription)
+            })
+        } else {
+            TwitterClient.sharedInstance?.favorite(tweet: tweet!, success: { (tweet: Tweet) -> () in
+                TwitterClient.sharedInstance?.homeTimeLine(count: self.count, success: { (tweets: [Tweet]) -> () in
+                    self.tweets = tweets
+                    self.tableView.reloadData()
+                }, failure: { (error: Error) -> () in
+                    print(error.localizedDescription)
+                })
+                print("favorited")
+            }, failure: { (error: Error) -> () in
+                print(error.localizedDescription)
+            })
+        }
+    }
+    @IBAction func retweet(_ sender: Any) {
+        let buttonPosition:CGPoint = (sender as AnyObject).convert(CGPoint.zero, to: self.tableView)
+        let indexPath = tableView.indexPathForRow(at: buttonPosition)
+        let tweet = tweets?[(indexPath?.row)!]
+        if (tweet?.retweeted!)! {
+            TwitterClient.sharedInstance?.unretweet(tweet: tweet!, success: { (tweet: Tweet) -> () in
+                TwitterClient.sharedInstance?.homeTimeLine(count: self.count, success: { (tweets: [Tweet]) -> () in
+                    self.tweets = tweets
+                    self.tableView.reloadData()
+                }, failure: { (error: Error) -> () in
+                    print(error.localizedDescription)
+                })
+                print("unretweeted")
+            }, failure: { (error: Error) -> () in
+                print(error.localizedDescription)
+            })
+        } else {
+            TwitterClient.sharedInstance?.retweet(tweet: tweet!, success: { (tweet: Tweet) -> () in
+                TwitterClient.sharedInstance?.homeTimeLine(count: self.count, success: { (tweets: [Tweet]) -> () in
+                    self.tweets = tweets
+                    self.tableView.reloadData()
+                }, failure: { (error: Error) -> () in
+                    print(error.localizedDescription)
+                })
+                print("retweeted")
+            }, failure: { (error: Error) -> () in
+                print(error.localizedDescription)
+            })
+        }
+    }
     /*
     // MARK: - Navigation
 
