@@ -21,7 +21,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.rowHeight = UITableViewAutomaticDimension
         
         navigationItem.titleView?.backgroundColor = .blue
-        TwitterClient.sharedInstance?.homeTimeLine(count: count, success: { (tweets: [Tweet]) -> () in
+        TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
             self.tweets = tweets
             for tweet in tweets{
                 print(tweet.text)
@@ -62,7 +62,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let tweet = tweets?[(indexPath?.row)!]
         if (tweet?.favorited!)! {
             TwitterClient.sharedInstance?.unfavorite(tweet: tweet!, success: { (tweet: Tweet) -> () in
-                TwitterClient.sharedInstance?.homeTimeLine(count: self.count, success: { (tweets: [Tweet]) -> () in
+                TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
                     self.tweets = tweets
                     self.tableView.reloadData()
                 }, failure: { (error: Error) -> () in
@@ -74,7 +74,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             })
         } else {
             TwitterClient.sharedInstance?.favorite(tweet: tweet!, success: { (tweet: Tweet) -> () in
-                TwitterClient.sharedInstance?.homeTimeLine(count: self.count, success: { (tweets: [Tweet]) -> () in
+                TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
                     self.tweets = tweets
                     self.tableView.reloadData()
                 }, failure: { (error: Error) -> () in
@@ -92,7 +92,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let tweet = tweets?[(indexPath?.row)!]
         if (tweet?.retweeted!)! {
             TwitterClient.sharedInstance?.unretweet(tweet: tweet!, success: { (tweet: Tweet) -> () in
-                TwitterClient.sharedInstance?.homeTimeLine(count: self.count, success: { (tweets: [Tweet]) -> () in
+                TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
                     self.tweets = tweets
                     self.tableView.reloadData()
                 }, failure: { (error: Error) -> () in
@@ -104,7 +104,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             })
         } else {
             TwitterClient.sharedInstance?.retweet(tweet: tweet!, success: { (tweet: Tweet) -> () in
-                TwitterClient.sharedInstance?.homeTimeLine(count: self.count, success: { (tweets: [Tweet]) -> () in
+                TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
                     self.tweets = tweets
                     self.tableView.reloadData()
                 }, failure: { (error: Error) -> () in

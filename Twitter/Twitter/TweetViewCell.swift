@@ -20,6 +20,7 @@ class TweetViewCell: UITableViewCell {
     
     var tweet: Tweet!{
         didSet{
+            TweetImageView.layer.cornerRadius = 5
             TweetNameLabel.text = tweet.name
             TweetImageView.setImageWith(tweet.imageUrl as URL!)
             TweetUsernameLabel.text = "@"+tweet.userName
