@@ -2,7 +2,7 @@
 //  LoginViewController.swift
 //  Twitter
 //
-//  Created by Swapnil Tamrakar on 2/21/17.
+//  Created by Swapnil Tamrakar on 2/11/17.
 //  Copyright © 2017 Swapnil Tamrakar. All rights reserved.
 //
 
@@ -11,18 +11,9 @@ import BDBOAuth1Manager
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var LogoImageView: UIImageView!
-    @IBAction func onLoginButton(_ sender: Any) {
-        TwitterClient.sharedInstance?.login(success: { () -> () in
-            print("I've logged in!")
-            self.performSegue(withIdentifier: "loginSegue", sender: nil)
-        }){ (error: NSError) -> () in
-            print("Error:\(error.localizedDescription)")
-        }
-        
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
 
@@ -31,6 +22,13 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onLoginButton(_ sender: Any) {
+        TwitterClient.sharedInstance?.login(success: {
+            self.performSegue(withIdentifier: "loginSegue", sender: nil)
+        }, failure: { (error: Error) in
+            print("\(error.localizedDescription)")
+        })
+    }
 
     /*
     // MARK: - Navigation
