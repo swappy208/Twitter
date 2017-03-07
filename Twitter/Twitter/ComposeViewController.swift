@@ -21,6 +21,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         if startingText != nil {
             tweetTextField.text = "\(startingText!) "
+            
         }
         tweetTextField.becomeFirstResponder()
         tweetTextField.delegate = self

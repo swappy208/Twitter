@@ -34,11 +34,9 @@ class ProfileViewController: UIViewController {
         
         userWrapperView.layer.cornerRadius = 5
         userWrapperView.clipsToBounds = true
-        
         userImageView.setImageWith(user.userImageURL)
         userImageView.layer.cornerRadius = 5
         userImageView.clipsToBounds = true
-        
         nameLabel.text = user.name
         screenNameLabel.text = user.screenName
         descriptionLabel.text = user.tagLine

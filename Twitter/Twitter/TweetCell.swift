@@ -43,6 +43,7 @@ class TweetCell: UITableViewCell {
                 self.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: UIControlState.normal)
             } else {
                 self.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: UIControlState.normal)
+                
             }
         }
     }

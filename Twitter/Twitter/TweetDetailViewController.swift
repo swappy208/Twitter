@@ -26,6 +26,7 @@ class TweetDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //image
         userImageView.setImageWith(tweet.author.userImageURL)
         userImageView.layer.cornerRadius = 5
         userImageView.clipsToBounds = true
@@ -90,7 +91,6 @@ class TweetDetailViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Compose stuff
         print("preparing for segue \(segue.identifier)")
         if segue.identifier == "ProfileSegue" {
             let profileVC = segue.destination as! ProfileViewController
